@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="styles.css">
+    <title>My_First_API</title>
+  </head>
+  <body>
+    
+    <h1>My first API</h1>
+    <div>
+      <img src="#" />
+      <form action="#">
+        <label for="gif"> Escolha seu Gif: </label>
+        <select name="gif" id="gif">
+          <option value="cats">Cats</option>
+          <option value="dog">Dog</option>
+          <option value="love">Love</option>
+          <option value="thumbs up">Thumbs up</option>
+          <option value="shrug">Shrug</option>
+          <option value="no">No</option>
+          <option value="yes">Yes</option>
+          <option value="bye">Bye</option>
+          <option value="tired">Tired</option>
+          <option value="mad">Mad</option>
+          <option value="confused">Confused</option>
+          <option value="interested">Interested</option>
+        </select>
+        <button type="submit" class="btn-img">Nova Imagem</button>
+      </form>
+    </div>
+
+   
+    <script>
+      const img = document.querySelector("img");
+      const btn = document.querySelector(".btn-img");
+      const form = document.querySelector("form");
+      let escolha;
+      btn.addEventListener("submit", gif);
+      gif();
+
+      form.addEventListener("submit", function (e) {
+        e.preventDefault();
+        const dados = new FormData(form);
+        escolha = dados.get("gif");
+
+        console.log(escolha);
+        gif(escolha);
+      });
+
+      function gif(escolha) {
+        fetch(
+          `https://api.giphy.com/v1/gifs/translate?api_key=G2R22DLpz5a5PSa6ytpeAzQFjUxY5GYJ&s=${escolha}`,
+        )
+          .then(function (response) {
+            return response.json();
+          })
+          .then(function (response) {
+            img.src = response.data.images.original.url;
+            console.log(response);
+          });
+      }
+    </script>
+  </body>
+ 
+</html>
